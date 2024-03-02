@@ -10,17 +10,31 @@ const loadCategory = async () =>{
     const categories = data.data;
     displayCategorie(categories);
 }
+
+
+
 // display categories button
 const displayCategorie = (categories) =>{
     categories.forEach(singleCategorie => {
-        console.log(singleCategorie);
+        // console.log(singleCategorie);
         const newBtn = document.createElement('button');
-        newBtn.className = `btn`
+        newBtn.className = 'category-btn btn btn-ghost bg-slate-500 text-white'
         newBtn.innerHTML = `${singleCategorie?.category}`;
         allCategories.appendChild(newBtn);
 
+        
         // EventListener add 
-        newBtn.addEventListener('click',() => handleSearchCategory(singleCategorie.category_id))
+        newBtn.addEventListener('click',() => {
+            handleSearchCategory(singleCategorie.category_id)
+            const allBtns = document.querySelectorAll('.category-btn');
+            for (const btn of allBtns) {
+                console.log(btn);
+                btn.classList.remove('bg-red-500')
+            }
+            newBtn.classList.add('bg-red-500')
+        })
+        
+        
     });
 }
 
@@ -66,13 +80,16 @@ const displayCategorieCard = (cards) =>{
 
     let verifiedBadge = ''
    cards.forEach(singleCard =>{
-    console.log(singleCard.authors[0].verified);
+    // console.log(singleCard.authors[0].verified);
     if(singleCard.authors[0].verified){
         verifiedBadge = `<img src="images/verify.png" alt="">`
     }
     const div = document.createElement('div');
     div.innerHTML = `
-    <figure><img class="h-[200px] object-cover" src="${singleCard.thumbnail}" alt="Shoes" /></figure>
+    <figure>
+    <img class="h-[200px] object-cover" src="${singleCard.thumbnail}" alt="Shoes" />
+    </figure>
+    <div class="w-[50%] bg-green-500"><h3 class="">0hours, 0minutes</h3></div>
     <div class="flex justify-center items-center gap-2">
       <img class="w-[40px] h-[40px] rounded-full border-2 border-red-500 my-4 object-cover" src="${singleCard.authors[0].profile_picture}" alt="">
         <div class="mt-4">
